@@ -1,5 +1,4 @@
-
-name: Build StockPro APK
+Name: Build StockPro APK
 
 on:
   workflow_dispatch:
@@ -42,7 +41,11 @@ jobs:
 
       - name: Compilar APK
         working-directory: extracted/StockProAndroid
-        run: gradle assembleDebug --no-daemon
+        run: |
+          # Dar permisos de ejecución al gradlew extraído del ZIP
+          chmod +x gradlew
+          # Usar ./gradlew en lugar de gradle para respetar la configuración de Java del proyecto
+          ./gradlew assembleDebug --no-daemon
 
       - name: Guardar APK compilada
         uses: actions/upload-artifact@v4
